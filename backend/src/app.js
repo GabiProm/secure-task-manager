@@ -7,6 +7,19 @@ const express = require("express");
 const pool = require("./db");
 
 const app = express();
+
+
+/**
+ * ✅ CORS configuration
+ * Permite requests desde el frontend
+ */
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+
 app.use(express.json());
 
 // Healthcheck
