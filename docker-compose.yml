@@ -13,8 +13,7 @@ services:
       - "5432:5432"
 
   backend:
-    build:
-      context: ./backend
+    image: henryggg/stm-backend:latest
     container_name: stm-backend
     env_file:
       - .env
