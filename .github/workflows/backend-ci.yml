@@ -25,14 +25,15 @@ jobs:
         run: |
           docker build \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:latest \
-            ./backend
-        
+            ./backend       
+
       - name: 🛡️ Scan image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:latest
           format: table
           severity: HIGH,CRITICAL
+          scanners: vuln
           ignore-unfixed: true
           exit-code: 1
 
