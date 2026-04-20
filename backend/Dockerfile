@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 4. Instalar dependencias
-RUN npm install --only=production
+RUN npm ci --only=production
 
 # 5. Copiar el resto del código
 COPY src ./src
