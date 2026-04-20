@@ -1,14 +1,15 @@
-name: CI Backend - Build & Push Docker Image
+name: CI Backend - Build, Scan & Push Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
     paths:
-      - "backend/**"
+      - backend/**
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  build-scan-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,15 +26,15 @@ jobs:
         run: |
           docker build \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:latest \
-            ./backend       
+            ./backend
 
-      - name: 🛡️ Scan image with Trivy
+      - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:latest
           format: table
-          severity: HIGH,CRITICAL
           scanners: vuln
+          severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: 1
 
