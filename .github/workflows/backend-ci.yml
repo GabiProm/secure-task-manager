@@ -26,7 +26,7 @@ jobs:
 
       # 3️⃣ Definir versión de la imagen (SHA corto)
       - name: Set image version
-        run: echo "IMAGE_TAG=sha-${GITHUB_SHA::7}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=sha-${GITHUB_SHA:0:7}" >> $GITHUB_ENV
 
       # 4️⃣ Build de la imagen con DOS tags
       - name: Build Docker image (versioned)
@@ -43,3 +43,12 @@ jobs:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:${{ env.IMAGE_TAG }}
           format: table
           scanners: vuln
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
+
+      # 6️⃣ PUSH REAL A DOCKER HUB (LO QUE FALTABA 🔥)
+      - name: Push Docker images
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/stm-backend:latest
