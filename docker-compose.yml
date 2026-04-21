@@ -24,10 +24,7 @@ services:
 
 
   frontend:
-    build:
-      context: ./frontend
-      args:
-        VITE_API_URL: http://localhost:3000
+    image: henryggg/stm-frontend:latest
     container_name: stm-frontend
     ports:
       - "5173:80"
