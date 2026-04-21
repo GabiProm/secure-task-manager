@@ -7,17 +7,18 @@ const express = require("express");
 const pool = require("./db");
 
 const app = express();
+
 const cors = require("cors");
 
-/**
- * ✅ CORS configuration
- * Permite requests desde el frontend
- */
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",  // Docker Compose
+    "http://localhost:30080"  // Kubernetes NodePort
+  ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
+
 
 
 app.use(express.json());
